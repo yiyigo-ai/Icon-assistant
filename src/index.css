@@ -1,0 +1,427 @@
+/* Claymorphism Design System */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Nunito:wght@700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* Colors */
+  --color-canvas: #F4F1FA;
+  --color-text-primary: #332F3A;
+  --color-text-muted: #635F69;
+  --color-violet: #7C3AED;
+  --color-hot-pink: #DB2777;
+  --color-sky-blue: #0EA5E9;
+  --color-success: #10B981;
+
+  /* Fonts */
+  --font-display: 'Nunito', 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'DM Sans', 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-clay-card: 16px 16px 32px rgba(160, 150, 180, 0.2), -10px -10px 24px rgba(255, 255, 255, 0.9), inset 6px 6px 12px rgba(139, 92, 246, 0.03), inset -6px -6px 12px rgba(255, 255, 255, 1);
+  --shadow-clay-button: 12px 12px 24px rgba(139, 92, 246, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.4), inset 4px 4px 8px rgba(255, 255, 255, 0.4), inset -4px -4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-clay-pressed: inset 10px 10px 20px #d9d4e3, inset -10px -10px 20px #ffffff;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-canvas);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-canvas);
+  min-height: 100vh;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Nunito for headings */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+/* ============================================
+   Custom Scrollbar - Clay Style
+   ============================================ */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EFEBF5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #A78BFA, #7C3AED);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #8B5CF6, #6D28D9);
+}
+
+/* ============================================
+   Animation Delays
+   ============================================ */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.animation-delay-6000 {
+  animation-delay: 6s;
+}
+
+/* ============================================
+   Reduced Motion (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Clay Card Component
+   ============================================ */
+.clay-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-clay-card);
+  transition: all 0.5s ease;
+}
+
+.clay-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    20px 20px 40px rgba(160, 150, 180, 0.25),
+    -14px -14px 32px rgba(255, 255, 255, 1),
+    inset 8px 8px 16px rgba(139, 92, 246, 0.05),
+    inset -8px -8px 16px rgba(255, 255, 255, 1);
+}
+
+/* ============================================
+   Clay Button Component
+   ============================================ */
+.clay-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.025em;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(to bottom right, #A78BFA, #7C3AED);
+  color: white;
+  box-shadow: var(--shadow-clay-button);
+}
+
+.clay-button:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    16px 16px 32px rgba(139, 92, 246, 0.35),
+    -10px -10px 20px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 10px rgba(255, 255, 255, 0.5),
+    inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.clay-button:active {
+  transform: scale(0.92);
+  box-shadow: var(--shadow-clay-pressed);
+}
+
+.clay-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(124, 58, 237, 0.3),
+    var(--shadow-clay-button);
+}
+
+.clay-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary Button */
+.clay-button-secondary {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
+  box-shadow:
+    10px 10px 20px rgba(160, 150, 180, 0.15),
+    -8px -8px 16px rgba(255, 255, 255, 0.8),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.6),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================
+   Clay Input Component
+   ============================================ */
+.clay-input {
+  width: 100%;
+  padding: 16px 24px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-text-primary);
+  background: #EFEBF5;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow:
+    inset 6px 6px 12px #d9d4e3,
+    inset -6px -6px 12px #ffffff;
+}
+
+.clay-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.clay-input:focus-visible {
+  background: white;
+  box-shadow:
+    0 0 0 4px rgba(124, 58, 237, 0.2),
+    inset 2px 2px 4px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   Clay Select Card
+   ============================================ */
+.clay-select-card {
+  position: relative;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow:
+    8px 8px 16px rgba(160, 150, 180, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+}
+
+.clay-select-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.clay-select-card.selected {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: #7C3AED;
+  box-shadow:
+    12px 12px 24px rgba(139, 92, 246, 0.2),
+    -8px -8px 16px rgba(255, 255, 255, 0.9),
+    inset 4px 4px 8px rgba(139, 92, 246, 0.05);
+}
+
+/* ============================================
+   Clay Pill / Tag
+   ============================================ */
+.clay-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-muted);
+  border: none;
+  box-shadow:
+    4px 4px 8px rgba(160, 150, 180, 0.1),
+    -3px -3px 6px rgba(255, 255, 255, 0.7);
+}
+
+.clay-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(124, 58, 237, 0.1);
+  color: #7C3AED;
+}
+
+/* ============================================
+   Section Label - 一级标题
+   ============================================ */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
+  margin-bottom: 14px;
+}
+
+.section-label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(to bottom right, #A78BFA, #7C3AED);
+  border-radius: 50%;
+}
+
+/* ============================================
+   Sub Label - 二级标题
+   ============================================ */
+.sub-label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+/* ============================================
+   Clay Modal
+   ============================================ */
+.clay-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(51, 47, 58, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.clay-modal {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 40px;
+  padding: 32px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: var(--shadow-clay-card);
+}
+
+/* ============================================
+   Progress Bar
+   ============================================ */
+.clay-progress {
+  height: 8px;
+  background: #EFEBF5;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    inset 2px 2px 4px rgba(160, 150, 180, 0.2),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.clay-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #A78BFA, #7C3AED);
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+/* ============================================
+   Gradient Text
+   ============================================ */
+.clay-gradient-text {
+  background: linear-gradient(135deg, #332F3A 20%, #7C3AED 60%, #DB2777);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Blob Background Elements
+   ============================================ */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.1;
+  animation: blobFloat 20s ease-in-out infinite;
+}
+
+.blob-violet {
+  background: #7C3AED;
+}
+
+.blob-pink {
+  background: #DB2777;
+}
+
+.blob-blue {
+  background: #0EA5E9;
+}
+
+/* ============================================
+   Focus Ring (Accessibility)
+   ============================================ */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(124, 58, 237, 0.3),
+    0 0 0 2px white;
+}
+
+/* ============================================
+   Clay Swatch (Color Picker)
+   ============================================ */
+.clay-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow:
+    6px 6px 12px rgba(160, 150, 180, 0.15),
+    -4px -4px 8px rgba(255, 255, 255, 0.7);
+}
+
+.clay-swatch:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    8px 8px 16px rgba(160, 150, 180, 0.2),
+    -6px -6px 10px rgba(255, 255, 255, 0.8);
+}
+
+.clay-swatch.selected {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 3px white,
+    0 0 0 5px #7C3AED,
+    6px 6px 12px rgba(139, 92, 246, 0.3);
+}

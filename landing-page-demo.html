@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>捏捏Icon - 落地页设计系统示例</title>
+  <link rel="stylesheet" href="design-tokens.css">
+  <style>
+    /* 基础重置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      line-height: var(--leading-normal);
+      color: var(--gray-700);
+      background: var(--primary-100);
+    }
+
+    /* 容器 */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+    }
+
+    @media (min-width: 768px) {
+      .container { padding: 0 var(--space-8); }
+    }
+
+    @media (min-width: 1024px) {
+      .container { padding: 0 var(--space-12); }
+    }
+
+    /* ==========================================
+       导航栏示例
+       ========================================== */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-fixed);
+      height: 80px;
+      padding: 0 var(--space-6);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--primary-700);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: var(--space-8);
+    }
+
+    .navbar-link {
+      font-size: var(--text-base);
+      font-weight: var(--font-medium);
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color var(--duration-200) var(--ease-out);
+      position: relative;
+    }
+
+    .navbar-link:hover {
+      color: var(--primary-600);
+    }
+
+    .navbar-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-500);
+      transform: scaleX(0);
+      transition: transform var(--duration-200) var(--ease-out);
+    }
+
+    .navbar-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ==========================================
+       Hero区域示例
+       ========================================== */
+
+    .hero {
+      min-height: 100vh;
+      padding: 120px var(--space-4) var(--space-16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-12);
+    }
+
+    @media (max-width: 1023px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 100px;
+      }
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 640px;
+    }
+
+    .hero-title {
+      font-size: var(--text-hero);
+      font-weight: var(--font-bold);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--gray-900);
+      margin-bottom: var(--space-6);
+    }
+
+    @media (max-width: 767px) {
+      .hero-title {
+        font-size: var(--text-5xl);
+      }
+    }
+
+    .hero-title-gradient {
+      background: linear-gradient(135deg, var(--primary-700) 0%, #EC4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-xl);
+      line-height: var(--leading-relaxed);
+      color: var(--gray-600);
+      margin-bottom: var(--space-12);
+    }
+
+    @media (max-width: 767px) {
+      .hero-subtitle {
+        font-size: var(--text-lg);
+      }
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1023px) {
+      .hero-cta-group {
+        justify-content: center;
+      }
+    }
+
+    /* ==========================================
+       按钮示例
+       ========================================== */
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-5) var(--space-12);
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      border: none;
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      transition: all var(--duration-200) var(--ease-out);
+      text-decoration: none;
+    }
+
+    .btn-primary-cta {
+      color: white;
+      background: linear-gradient(135deg, var(--accent-400) 0%, var(--accent-500) 100%);
+      box-shadow:
+        0 8px 24px rgba(249, 115, 22, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary-cta:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 12px 32px rgba(249, 115, 22, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary-cta {
+      color: var(--primary-700);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      border: 2px solid var(--primary-300);
+    }
+
+    .btn-secondary-cta:hover {
+      background: white;
+      border-color: var(--primary-400);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+    }
+
+    /* ==========================================
+       黏土形状示例
+       ========================================== */
+
+    .hero-visual {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clay-shape {
+      width: 480px;
+      height: 480px;
+      background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-700) 100%);
+      border-radius: 60px 80px 70px 90px;
+      box-shadow:
+        30px 30px 60px rgba(124, 58, 237, 0.3),
+        -30px -30px 60px rgba(255, 255, 255, 1),
+        inset 8px 8px 16px rgba(255, 255, 255, 0.4),
+        inset -8px -8px 16px rgba(124, 58, 237, 0.2);
+      animation: float 6s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 767px) {
+      .clay-shape {
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .clay-shape {
+        width: 380px;
+        height: 380px;
+      }
+    }
+
+    .clay-shape-content {
+      font-size: var(--text-6xl);
+      color: white;
+      text-align: center;
+      font-weight: var(--font-bold);
+      text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ==========================================
+       功能卡片示例
+       ========================================== */
+
+    .features {
+      padding: var(--space-24) 0;
+    }
+
+    .section-title {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      text-align: center;
+      color: var(--gray-800);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-subtitle {
+      font-size: var(--text-lg);
+      text-align: center;
+      color: var(--gray-600);
+      max-width: 640px;
+      margin: 0 auto var(--space-16);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding: 0 var(--space-4);
+    }
+
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-8);
+        padding: 0 var(--space-8);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-10);
+        padding: 0 var(--space-12);
+      }
+    }
+
+    .feature-card {
+      padding: var(--space-8);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-3xl);
+      box-shadow:
+        0 8px 32px rgba(124, 58, 237, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: all var(--duration-300) cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow:
+        0 16px 48px rgba(124, 58, 237, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .feature-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      margin-bottom: var(--space-6);
+      background: linear-gradient(135deg, var(--primary-200) 0%, var(--primary-400) 100%);
+      border-radius: var(--radius-2xl);
+      box-shadow:
+        8px 8px 16px rgba(124, 58, 237, 0.15),
+        -8px -8px 16px rgba(255, 255, 255, 0.8),
+        inset 4px 4px 8px rgba(255, 255, 255, 0.3),
+        inset -4px -4px 8px rgba(124, 58, 237, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-3xl);
+    }
+
+    .feature-card-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-semibold);
+      line-height: 1.3;
+      color: var(--gray-800);
+      margin-bottom: var(--space-3);
+    }
+
+    .feature-card-desc {
+      font-size: var(--text-base);
+      line-height: var(--leading-relaxed);
+      color: var(--gray-600);
+    }
+
+    /* ==========================================
+       CTA区域示例
+       ========================================== */
+
+    .cta-section {
+      padding: var(--space-24) 0;
+      text-align: center;
+    }
+
+    .cta-box {
+      max-width: 896px;
+      margin: 0 auto;
+      padding: var(--space-16);
+      background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-700) 100%);
+      border-radius: 40px 50px 45px 55px;
+      box-shadow:
+        20px 20px 40px rgba(124, 58, 237, 0.25),
+        -20px -20px 40px rgba(255, 255, 255, 0.95);
+    }
+
+    .cta-title {
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-subtitle {
+      font-size: var(--text-lg);
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: var(--space-8);
+    }
+
+    .btn-cta-white {
+      padding: var(--space-5) var(--space-12);
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--primary-700);
+      background: white;
+      border: none;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all var(--duration-200) var(--ease-out);
+    }
+
+    .btn-cta-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==========================================
+       页脚示例
+       ========================================== */
+
+    .footer {
+      padding: var(--space-16) var(--space-6);
+      background: var(--gray-900);
+      color: var(--gray-400);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .footer-logo {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: white;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .footer-link {
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color var(--duration-200) var(--ease-out);
+    }
+
+    .footer-link:hover {
+      color: white;
+    }
+
+    .footer-copyright {
+      font-size: var(--text-sm);
+      color: var(--gray-500);
+    }
+
+    /* ==========================================
+       动画
+       ========================================== */
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ==========================================
+       辅助类
+       ========================================== */
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary-700) 0%, #EC4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span>捏捏Icon</span>
+    </div>
+    <div class="navbar-links">
+      <a href="#features" class="navbar-link">功能</a>
+      <a href="#pricing" class="navbar-link">价格</a>
+      <a href="#about" class="navbar-link">关于</a>
+      <a href="#contact" class="navbar-link">联系</a>
+    </div>
+  </nav>
+
+  <!-- Hero区域 -->
+  <section class="hero container">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        AI驱动的<br>
+        <span class="text-gradient">跨境电商图标设计</span>
+      </h1>
+      <p class="hero-subtitle">
+        使用捏捏Icon，快速生成符合国际审美的产品图标。
+        支持多风格、多尺寸导出，让你的产品在全球市场脱颖而出。
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn btn-primary-cta">免费开始设计</button>
+        <button class="btn btn-secondary-cta">查看案例</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="clay-shape">
+        <div class="clay-shape-content">
+          AI<br>图标
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 功能区域 -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">强大功能，简单易用</h2>
+      <p class="section-subtitle">
+        我们将复杂的设计流程简化为三步，让每个人都能创建专业级的电商图标
+      </p>
+      <div class="features-grid">
+        <!-- 卡片1 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">1</div>
+          <h3 class="feature-card-title">AI智能生成</h3>
+          <p class="feature-card-desc">
+            输入产品描述，AI自动分析并生成符合行业特征的图标设计方案，支持多种风格选择。
+          </p>
+        </div>
+        <!-- 卡片2 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">2</div>
+          <h3 class="feature-card-title">一键适配多平台</h3>
+          <p class="feature-card-desc">
+            自动适配Amazon、eBay、Shopify等主流平台规格，支持批量导出不同尺寸和格式。
+          </p>
+        </div>
+        <!-- 卡片3 -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">3</div>
+          <h3 class="feature-card-title">本地化风格</h3>
+          <p class="feature-card-desc">
+            根据目标市场自动调整设计风格，欧美简约、日韩可爱、东南亚鲜艳，一键切换。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA区域 -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2 class="cta-title">准备好提升你的电商视觉了吗？</h2>
+        <p class="cta-subtitle">加入10000+跨境电商卖家的选择，让产品图标成为转化利器</p>
+        <button class="btn-cta-white">立即免费试用</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">捏捏Icon</div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">隐私政策</a>
+        <a href="#" class="footer-link">服务条款</a>
+        <a href="#" class="footer-link">帮助中心</a>
+        <a href="#" class="footer-link">联系我们</a>
+      </div>
+      <p class="footer-copyright">2026 捏捏Icon. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

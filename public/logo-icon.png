@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="FRAME_4">
+<path d="M0 12C0 5.37258 5.37258 0 12 0H28C34.6274 0 40 5.37258 40 12V28C40 34.6274 34.6274 40 28 40H12C5.37258 40 0 34.6274 0 28V12Z" fill="url(#paint0_linear_0_7)"/>
+<g id="RECTANGLE_5">
+<path d="M8 13C8 11.3431 9.34315 10 11 10V10C12.6569 10 14 11.3431 14 13V13C14 14.6569 12.6569 16 11 16V16C9.34315 16 8 14.6569 8 13V13Z" fill="var(--fill-0, white)"/>
+</g>
+<g id="RECTANGLE_6">
+<path d="M26 13C26 11.3431 27.3431 10 29 10V10C30.6569 10 32 11.3431 32 13V13C32 14.6569 30.6569 16 29 16V16C27.3431 16 26 14.6569 26 13V13Z" fill="var(--fill-0, white)"/>
+</g>
+<path id="Rectangle 1" d="M20 30C22.9715 30 25.4885 27.7251 25.8242 24.7559C25.9337 23.7869 25.7867 23.0818 25.374 22.6836C24.636 21.9715 23.0851 21 20 21C17.0386 21 15.4923 21.8953 14.7227 22.5928C14.2476 23.0234 14.093 23.8012 14.2529 24.8623L14.2861 25.083C14.7123 27.9097 17.1413 30 20 30Z" fill="var(--fill-0, white)" stroke="var(--stroke-0, white)" stroke-width="2"/>
+<g id="RECTANGLE_7">
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_7" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+<stop stop-color="#9B66FF"/>
+<stop offset="1" stop-color="#7C3AED"/>
+</linearGradient>
+</defs>
+</svg>
