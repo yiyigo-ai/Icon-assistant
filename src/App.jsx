@@ -116,14 +116,47 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
               </button>
-              {/* Logo */}
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+              {/* Logo - 笑脸 */}
+              <div
+                className="relative"
                 style={{
-                  background: 'linear-gradient(to bottom right, #A78BFA, #7C3AED)',
-                  boxShadow: '4px 4px 8px rgba(139, 92, 246, 0.2)'
-                }}>
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #A78BFA 0%, #8B4BF0 100%)',
+                  borderRadius: '10px',
+                }}
+              >
+                {/* 左眼 */}
+                <div
+                  className="absolute rounded-full"
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    left: '8px',
+                    top: '10px',
+                    backgroundColor: 'white',
+                  }}
+                />
+                {/* 右眼 */}
+                <div
+                  className="absolute rounded-full"
+                  style={{
+                    width: '6px',
+                    height: '6px',
+                    right: '8px',
+                    top: '10px',
+                    backgroundColor: 'white',
+                  }}
+                />
+                {/* 嘴巴 */}
+                <svg
+                  className="absolute"
+                  style={{ bottom: '9px', left: '50%', transform: 'translateX(-50%)' }}
+                  width="14"
+                  height="11"
+                  viewBox="0 0 14 11"
+                >
+                  <path d="M1 4 Q7 12 13 4" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />
                 </svg>
               </div>
               <div>

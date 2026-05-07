@@ -165,13 +165,15 @@ const LandingPage = ({ onEnter }) => {
         />
       </div>
 
-      {/* 主内容区 - 1920px 设计宽度适配 */}
+      {/* 主内容区 - 1920px 设计宽度适配，缩放到90% */}
       <div
         className="relative mx-auto"
         style={{
           maxWidth: '1920px',
           minHeight: '100vh',
           padding: '60px 127px 50px',
+          transform: 'scale(0.9)',
+          transformOrigin: 'top center',
         }}
       >
         {/* Header */}
@@ -211,7 +213,7 @@ const LandingPage = ({ onEnter }) => {
             {/* 嘴巴 */}
             <svg
               className="absolute"
-              style={{ bottom: '6px', left: '50%', transform: 'translateX(-50%)' }}
+              style={{ bottom: '9px', left: '50%', transform: 'translateX(-50%)' }}
               width="14"
               height="11"
               viewBox="0 0 14 11"
@@ -345,7 +347,7 @@ const LandingPage = ({ onEnter }) => {
                   transition: 'all 0.6s ease 0.4s',
                 }}
               >
-                输入描述，AI 自动生成专业图标。针对东南亚、中东、拉美等地区优化，支持多风格、多格式导出，助力品牌出海。
+                输入描述，AI 自动生成专业图标。提供东南亚、中东、拉美等地区在地化设计建议，支持多风格、多格式导出，助力品牌出海。
               </p>
             </div>
 
@@ -422,7 +424,7 @@ const LandingPage = ({ onEnter }) => {
           <div
             className="absolute bottom-0 hero-visual-wrap overflow-visible"
             style={{
-              left: 'calc(623px + 315px - 235px)',
+              left: 'calc(623px + 315px - 285px)',
               top: 'auto',
               width: '1040px',
               height: '680px',
