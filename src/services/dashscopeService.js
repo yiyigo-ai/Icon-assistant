@@ -79,7 +79,7 @@ export const createImageTask = async (prompt, options = {}) => {
     },
     parameters: {
       n: 1,
-      size: '1024*1024'
+      size: '512*512'
     }
   };
 
@@ -167,7 +167,7 @@ export const queryTaskStatus = async (taskId) => {
 };
 
 // 轮询等待任务完成
-export const waitForTask = async (taskId, onProgress, maxAttempts = 60, interval = 2000) => {
+export const waitForTask = async (taskId, onProgress, maxAttempts = 60, interval = 1000) => {
   let attempts = 0;
 
   while (attempts < maxAttempts) {
