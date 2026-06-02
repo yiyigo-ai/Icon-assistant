@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { generateImage, buildPrompt, hasApiKey, getReferenceImage, getPromptTemplate } from '../services/dashscopeService';
+import { convertImageToSvg, downloadSvg } from '../utils/pngToSvg';
 
 const AIIconGenerator = ({ description, style, region, onSettingsClick }) => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -175,8 +176,25 @@ const AIIconGenerator = ({ description, style, region, onSettingsClick }) => {
     }
   };
 
-  const handleConvertToSVG = () => {
-    alert('PNG转SVG功能开发中...\n\n推荐工具：\n- convertio.co/png-svg\n- autotracer.org');
+  const [isConverting, setIsConverting] = useState(false);
+
+  const handleConvertToSVG = async () => {
+    if (!generatedImageUrl) return;
+
+    setIsConverting(true);
+    try {
+      const svgString = await convertImageToSvg(generatedImageUrl, {
+        numberofcolors: 8,  // 减少颜色数量，适合图标
+        ltres: 1,
+        qtres: 1,
+      });
+      downloadSvg(svgString, `${description || 'icon'}-${style}.svg`);
+    } catch (err) {
+      console.error('SVG 转换失败:', err);
+      alert('转换失败，请重试');
+    } finally {
+      setIsConverting(false);
+    }
   };
 
   return (
@@ -363,10 +381,11 @@ const AIIconGenerator = ({ description, style, region, onSettingsClick }) => {
             </button>
             <button
               onClick={handleConvertToSVG}
-              className="flex-1 clay-button clay-button-secondary text-sm"
+              disabled={isConverting}
+              className={`flex-1 clay-button clay-button-secondary text-sm ${isConverting ? 'opacity-50 cursor-not-allowed' : ''}`}
               style={{ fontFamily: 'Nunito, sans-serif' }}
             >
-              转 SVG
+              {isConverting ? '转换中...' : '转 SVG'}
             </button>
           </div>
         </div>
