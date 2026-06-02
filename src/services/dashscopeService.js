@@ -63,37 +63,19 @@ const imageToBase64 = async (imageUrl) => {
   }
 };
 
-// 创建图片生成任务 - 使用 qwen-image-2.0-pro
+// 创建图片生成任务 - 使用通义万相 (wanx-v1)
 export const createImageTask = async (prompt, options = {}) => {
   const apiKey = getApiKey();
   if (!apiKey) {
     throw new Error('请先配置API Key');
   }
 
-  // 构建消息内容
-  const content = [];
-
-  // 如果有参考图，添加到content
-  if (options.refImageBase64) {
-    // qwen-image 支持 base64 格式：data:image/png;base64,xxx
-    content.push({
-      image: options.refImageBase64
-    });
-    console.log('已添加参考图到请求');
-  }
-
-  // 添加文本提示
-  content.push({
-    text: prompt
-  });
-
+  // 使用通义万相模型 (wanx-v1)
+  // 文档: https://help.aliyun.com/zh/model-studio/developer-reference/use-wanx-by-api
   const requestBody = {
-    model: 'qwen-image-2.0-pro',
+    model: 'wanx-v1',
     input: {
-      messages: [{
-        role: 'user',
-        content: content
-      }]
+      prompt: prompt
     },
     parameters: {
       n: 1,
@@ -101,39 +83,54 @@ export const createImageTask = async (prompt, options = {}) => {
     }
   };
 
-  // 使用 multimodal-generation API
-  const response = await fetch(`${API_BASE}/services/aigc/multimodal-generation/generation`, {
+  // 如果有参考图，使用图生图模式
+  if (options.refImageBase64) {
+    requestBody.input.ref_image = options.refImageBase64;
+    console.log('已添加参考图到请求（图生图模式）');
+  }
+
+  // 通义万相使用 text2image/image-synthesis API
+  const response = await fetch(`${API_BASE}/services/aigc/text2image/image-synthesis`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-DashScope-Async': 'enable'  // 启用异步模式
     },
     body: JSON.stringify(requestBody)
   });
 
+  // 检查 Content-Type，避免解析 HTML 错误页面
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('API 返回非 JSON 响应:', text.substring(0, 500));
+    throw new Error(`API 错误 (${response.status}): ${text.substring(0, 100)}`);
+  }
+
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || '创建任务失败');
+    throw new Error(data.message || data.error?.message || '创建任务失败');
   }
 
-  // 检查同步返回结果 - qwen-image-2.0-pro 格式
-  if (data.output?.choices) {
-    const imageUrl = data.output.choices[0]?.message?.content?.[0]?.image;
+  // 通义万相返回格式：异步模式返回 task_id
+  if (data.output?.task_id) {
+    return {
+      sync: false,
+      taskId: data.output.task_id
+    };
+  }
+
+  // 如果有同步结果（某些配置可能支持）
+  if (data.output?.results) {
+    const imageUrl = data.output.results[0]?.url;
     if (imageUrl) {
       return {
         sync: true,
         imageUrl: imageUrl
       };
     }
-  }
-
-  // 检查异步任务
-  if (data.output?.task_id) {
-    return {
-      sync: false,
-      taskId: data.output.task_id
-    };
   }
 
   throw new Error('创建任务失败: ' + JSON.stringify(data));
@@ -152,10 +149,18 @@ export const queryTaskStatus = async (taskId) => {
     }
   });
 
+  // 检查 Content-Type，避免解析 HTML 错误页面
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    console.error('API 返回非 JSON 响应:', text.substring(0, 500));
+    throw new Error(`API 错误 (${response.status}): ${text.substring(0, 100)}`);
+  }
+
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || '查询任务失败');
+    throw new Error(data.message || data.error?.message || '查询任务失败');
   }
 
   return data.output;
